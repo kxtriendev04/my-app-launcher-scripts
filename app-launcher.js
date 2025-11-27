@@ -15,7 +15,7 @@
     },
     {
       name: "MiniQuiz",
-      url: "https://miniquiz.com",
+      url: "https://vue-mini-quiz.vercel.app/",
       logo: "https://cdn-icons-png.flaticon.com/512/5690/5690084.png",
       color: "#8b5cf6",
       category: "Giáo dục & Game",
