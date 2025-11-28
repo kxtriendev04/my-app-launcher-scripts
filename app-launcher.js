@@ -16,7 +16,7 @@
     {
       name: "MiniQuiz",
       url: "https://vue-mini-quiz.vercel.app/",
-      logo: "https://cdn-icons-png.flaticon.com/512/5690/5690084.png",
+      logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/miniquizlogo.png",
       color: "#8b5cf6",
       category: "Giáo dục & Game",
       isNew: true,
