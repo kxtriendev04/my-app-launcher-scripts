@@ -24,7 +24,7 @@
     {
       name: "Pikutei Editor",
       url: "https://pikutei.com",
-      logo: "https://cdn-icons-png.flaticon.com/512/10051/10051263.png",
+      logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/pikuseilogo.png",
       color: "#ec4899",
       category: "Công cụ Sáng tạo",
     },
