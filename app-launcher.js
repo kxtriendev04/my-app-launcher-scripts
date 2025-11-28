@@ -1,4 +1,3 @@
-// app-launcher.js
 (function () {
   /**
    * CẤU HÌNH DANH SÁCH ỨNG DỤNG
@@ -60,11 +59,25 @@
     },
 
     // --- NHÓM 3: DOANH NGHIỆP ---
-    { name: "Tuyển dụng", url: "#", logo: "", icon: "👥", color: "#3b82f6", category: "Doanh nghiệp" },
-    { name: "Kho hàng", url: "#", logo: "", icon: "🏠", color: "#f59e0b", category: "Doanh nghiệp" },
+    {
+      name: "Tuyển dụng",
+      url: "#",
+      logo: "",
+      icon: "👥",
+      color: "#3b82f6",
+      category: "Doanh nghiệp",
+    },
+    {
+      name: "Kho hàng",
+      url: "#",
+      logo: "",
+      icon: "🏠",
+      color: "#f59e0b",
+      category: "Doanh nghiệp",
+    },
   ];
 
-  // 2. CSS STYLING (Responsive + Smart Button)
+  // 2. CSS STYLING
   const style = document.createElement("style");
   style.innerHTML = `
     :root {
@@ -73,48 +86,57 @@
         --primary-color: #2563eb;
     }
 
-    /* --- NÚT BẤM THÔNG MINH (UPDATED FOR HIGH CONTRAST) --- */
+    /* --- NÚT BẤM THÔNG MINH --- */
     #launcher-btn {
         position: fixed;
-        top: 30vh;
+        top: 15vh;
         left: 0;
         z-index: 9999;
         
-        /* Thay đổi quan trọng: Nền trắng đục + Bóng đổ đậm */
-        background: rgba(255, 255, 255, 0.95); /* Trắng gần như tuyệt đối để nổi trên nền đen */
-        border: 1px solid rgba(0,0,0,0.15);    /* Viền mỏng để nổi trên nền trắng */
-        box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* Bóng đổ mạnh giúp tách biệt khỏi nền */
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(0,0,0,0.15);   
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         
-        width: 16px; /* Mặc định to hơn chút để dễ thấy phần viền */
+        width: 16px; 
         height: 60px;
         border-radius: 0 12px 12px 0;
         
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        
+        /* [MỚI] Cho phép kéo thả tốt hơn */
+        cursor: grab; 
+        touch-action: none; /* Ngăn cuộn trang khi chạm vào nút trên mobile */
+        user-select: none;  /* Ngăn bôi đen icon */
+
+        transition: width 0.3s, background 0.3s, border 0.3s, box-shadow 0.3s; /* Bỏ transition top/transform để kéo mượt */
         backdrop-filter: blur(4px);
         overflow: hidden;
+    }
+
+    #launcher-btn:active {
+        cursor: grabbing;
     }
 
     /* Icon bên trong nút */
     #launcher-btn .btn-icon { 
         width: 24px; height: 24px; 
-        fill: #333; /* Icon màu đen đậm */
+        fill: #333; 
         opacity: 0; 
         transform: scale(0.5);
         transition: all 0.2s ease;
+        pointer-events: none; /* Icon không chặn sự kiện chuột */
     }
 
-    /* KHI DI CHUỘT VÀO: Phóng to ra */
+    /* KHI DI CHUỘT VÀO */
     #launcher-btn:hover {
         width: 50px;
         height: 50px;
         background: #fff;
         opacity: 1;
         border-color: rgba(0,0,0,0.1);
-        box-shadow: 4px 4px 20px rgba(0,0,0,0.2); /* Bóng đổ to hơn khi hover */
+        box-shadow: 4px 4px 20px rgba(0,0,0,0.2);
     }
     
     #launcher-btn:hover .btn-icon {
@@ -126,7 +148,7 @@
     #launcher-overlay {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0, 0, 0, 0.5); /* Tối hơn xíu */
+        background: rgba(0, 0, 0, 0.5); 
         backdrop-filter: blur(3px);
         z-index: 9998;
         opacity: 0; visibility: hidden;
@@ -134,7 +156,7 @@
     }
     #launcher-overlay.active { opacity: 1; visibility: visible; }
 
-    /* Drawer Styles (Responsive) */
+    /* Drawer Styles */
     #app-drawer {
         position: fixed;
         top: 0; left: 0; bottom: 0;
@@ -151,21 +173,18 @@
     }
     #app-drawer.active { transform: translateX(0); }
 
-    /* --- RESPONSIVE MEDIA QUERIES --- */
+    /* --- RESPONSIVE --- */
     @media (max-width: 600px) {
         #app-drawer { width: var(--drawer-width-mobile); max-width: 340px; }
         
-        /* Mobile styling */
         #launcher-btn {
-            width: 24px; /* Trên mobile làm to hẳn ra dạng "tay cầm" */
-            height: 44px;
-            top: 50%;
-            /* Vẫn giữ style trắng trên mobile */
+            width: 20px; 
+            height: 36px;
+            /* Xóa top: 50% ở đây vì sẽ set bằng JS */
             background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         
-        /* Icon trên mobile hiện mờ mờ để người dùng biết là nút */
         #launcher-btn .btn-icon {
             opacity: 0.5;
             transform: scale(0.8);
@@ -178,116 +197,36 @@
         #launcher-btn:active .btn-icon { opacity: 1; transform: scale(1); }
     }
 
-    /* Header */
-    .drawer-header {
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-shrink: 0;
-    }
+    /* Header, Search, Content, Grid css giữ nguyên */
+    .drawer-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .drawer-title { font-weight: 700; font-size: 18px; color: #111; }
-    
-    .close-btn {
-        cursor: pointer;
-        width: 32px; height: 32px;
-        display: flex; align-items: center; justify-content: center;
-        border-radius: 50%;
-        color: #6b7280;
-        transition: 0.2s;
-        background: #f9fafb;
-    }
+    .close-btn { cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #6b7280; transition: 0.2s; background: #f9fafb; }
     .close-btn:hover { background: #fee2e2; color: #ef4444; }
-
-    /* Search */
-    .search-wrapper { 
-        padding: 0 20px 20px 20px; 
-        flex-shrink: 0;
-    }
-    .search-group {
-        position: relative; width: 100%; display: flex; align-items: center;
-    }
-    .search-icon {
-        position: absolute; left: 12px; width: 18px; height: 18px; fill: #9ca3af; pointer-events: none;
-    }
-    .search-input {
-        width: 100%;
-        padding: 10px 10px 10px 38px;
-        border: 1px solid #e5e7eb;
-        border-radius: 10px;
-        outline: none;
-        background: #f9fafb;
-        font-size: 14px;
-        transition: 0.2s;
-        box-sizing: border-box; 
-    }
+    .search-wrapper { padding: 0 20px 20px 20px; flex-shrink: 0; }
+    .search-group { position: relative; width: 100%; display: flex; align-items: center; }
+    .search-icon { position: absolute; left: 12px; width: 18px; height: 18px; fill: #9ca3af; pointer-events: none; }
+    .search-input { width: 100%; padding: 10px 10px 10px 38px; border: 1px solid #e5e7eb; border-radius: 10px; outline: none; background: #f9fafb; font-size: 14px; transition: 0.2s; box-sizing: border-box; }
     .search-input:focus { background: #fff; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-
-    /* Content Area & Scrollbar */
-    .app-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 0 20px 40px 20px;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(0,0,0,0.1) transparent;
-    }
+    .app-content { flex: 1; overflow-y: auto; padding: 0 20px 40px 20px; scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.1) transparent; }
     .app-content::-webkit-scrollbar { width: 5px; }
     .app-content::-webkit-scrollbar-track { background: transparent; }
-    .app-content::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.1); border-radius: 10px;
-    }
-
-    /* Category */
+    .app-content::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.1); border-radius: 10px; }
     .category-group { margin-bottom: 24px; }
-    .category-title {
-        font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 700; margin-bottom: 10px;
-    }
-
-    /* Grid */
-    .app-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-    }
-    @media (max-width: 320px) {
-         .app-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    /* App Item */
-    .app-item {
-        display: flex; flex-direction: column; align-items: center;
-        text-decoration: none; padding: 10px 5px;
-        border-radius: 10px; transition: 0.2s; cursor: pointer; position: relative;
-    }
+    .category-title { font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 700; margin-bottom: 10px; }
+    .app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media (max-width: 320px) { .app-grid { grid-template-columns: repeat(2, 1fr); } }
+    .app-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 10px 5px; border-radius: 10px; transition: 0.2s; cursor: pointer; position: relative; }
     .app-item:hover { background: #f3f4f6; }
-    
-    /* Icon Box */
-    .app-icon-box {
-        width: 44px; height: 44px;
-        border-radius: 12px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 20px; color: white; margin-bottom: 6px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        overflow: hidden; background-color: #fff;
-    }
-    
+    .app-icon-box { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; padding: 10px; color: white; margin-bottom: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); overflow: hidden; background-color: #fff; }
     .app-img { width: 100%; height: 100%; object-fit: cover; }
-    .app-name {
-        font-size: 12px; font-weight: 500; color: #374151;
-        text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;
-    }
-
-    /* Badge New */
-    .badge-new {
-        position: absolute; top: 8px; right: 8px;
-        background: #ef4444; width: 6px; height: 6px; border-radius: 50%; border: 1px solid white;
-    }
+    .app-name { font-size: 12px; font-weight: 500; color: #374151; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
+    .badge-new { position: absolute; top: 8px; right: 8px; background: #ef4444; width: 6px; height: 6px; border-radius: 50%; border: 1px solid white; }
   `;
   document.head.appendChild(style);
 
   // 3. HTML TEMPLATE
   const html = `
-    <div id="launcher-btn" title="Menu">
+    <div id="launcher-btn" title="Menu (Kéo để di chuyển)">
         <svg class="btn-icon" viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"></path></svg>
     </div>
 
@@ -309,7 +248,7 @@
         </div>
 
         <div class="app-content" id="app-list-container">
-            </div>
+        </div>
     </div>
   `;
 
@@ -325,6 +264,75 @@
   const searchInput = document.getElementById("app-search");
   const listContainer = document.getElementById("app-list-container");
 
+  // --- LOGIC KÉO THẢ (DRAGGABLE) ---
+  function makeDraggable(element) {
+    let isDragging = false;
+    let startY, startTop;
+    let movedDistance = 0; // Để phân biệt click và drag
+
+    // Xử lý sự kiện bắt đầu (Chuột & Touch)
+    const onStart = (e) => {
+      isDragging = true;
+      movedDistance = 0; // Reset quãng đường đã di chuyển
+
+      // Lấy tọa độ Y (hỗ trợ cả Mobile và PC)
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      startY = clientY;
+      startTop = parseInt(window.getComputedStyle(element).top, 10) || 0;
+
+      // Thêm event listener cho việc di chuyển và thả ra vào window
+      if (e.type === "touchstart") {
+        document.addEventListener("touchmove", onMove, { passive: false });
+        document.addEventListener("touchend", onEnd);
+      } else {
+        document.addEventListener("mousemove", onMove);
+        document.addEventListener("mouseup", onEnd);
+      }
+    };
+
+    // Xử lý sự kiện di chuyển
+    const onMove = (e) => {
+      if (!isDragging) return;
+
+      // Ngăn cuộn trang trên mobile khi đang kéo nút
+      if (e.type === "touchmove") e.preventDefault();
+
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const deltaY = clientY - startY;
+
+      movedDistance = Math.abs(deltaY); // Tính tổng quãng đường di chuyển
+
+      let newTop = startTop + deltaY;
+
+      // Giới hạn không cho kéo ra ngoài màn hình
+      const maxTop = window.innerHeight - element.offsetHeight;
+      if (newTop < 0) newTop = 0;
+      if (newTop > maxTop) newTop = maxTop;
+
+      element.style.top = `${newTop}px`;
+    };
+
+    // Xử lý sự kiện kết thúc
+    const onEnd = () => {
+      isDragging = false;
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onEnd);
+      document.removeEventListener("touchmove", onMove);
+      document.removeEventListener("touchend", onEnd);
+    };
+
+    element.addEventListener("mousedown", onStart);
+    element.addEventListener("touchstart", onStart, { passive: false });
+
+    // Trả về hàm kiểm tra xem vừa rồi là Drag hay Click
+    return () => movedDistance > 5; // Nếu di chuyển > 5px thì là Drag
+  }
+
+  // Kích hoạt tính năng kéo thả và lấy hàm kiểm tra
+  const checkIsDrag = makeDraggable(openBtn);
+
+  // --- RENDER APPS ---
   function groupApps(apps) {
     return apps.reduce((groups, app) => {
       const category = app.category || "Tiện ích khác";
@@ -364,11 +372,17 @@
         let bgStyle = "";
 
         if (app.logo && app.logo.length > 0) {
-            iconContent = `<img src="${app.logo}" class="app-img" alt="${app.name}" onerror="this.style.display='none';this.parentNode.innerText='${app.name.charAt(0)}'"/>`;
-            bgStyle = `border: 1px solid #f3f4f6;`; 
+          iconContent = `<img src="${app.logo}" class="app-img" alt="${
+            app.name
+          }" onerror="this.style.display='none';this.parentNode.innerText='${app.name.charAt(
+            0
+          )}'"/>`;
+          bgStyle = `border: 1px solid #f3f4f6;`;
         } else {
-            iconContent = app.icon || app.name.charAt(0);
-            bgStyle = `background-color: ${app.color || "#3b82f6"}; color: white; border: none;`;
+          iconContent = app.icon || app.name.charAt(0);
+          bgStyle = `background-color: ${
+            app.color || "#3b82f6"
+          }; color: white; border: none;`;
         }
 
         const badgeHtml = app.isNew ? `<span class="badge-new"></span>` : "";
@@ -402,7 +416,15 @@
     }
   }
 
-  openBtn.addEventListener("click", (e) => { e.stopPropagation(); toggleDrawer(true); });
+  // --- SỰ KIỆN CLICK (Đã sửa để không bị trùng với Kéo) ---
+  openBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    // Kiểm tra: Nếu là kéo thả (di chuyển > 5px) thì KHÔNG mở menu
+    if (!checkIsDrag()) {
+      toggleDrawer(true);
+    }
+  });
+
   closeBtn.addEventListener("click", () => toggleDrawer(false));
   overlay.addEventListener("click", () => toggleDrawer(false));
   searchInput.addEventListener("input", (e) => renderApps(e.target.value));
