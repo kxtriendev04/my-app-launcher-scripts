@@ -69,36 +69,39 @@
   style.innerHTML = `
     :root {
         --drawer-width-desktop: 320px;
-        --drawer-width-mobile: 85vw; /* 85% màn hình trên mobile */
+        --drawer-width-mobile: 85vw;
         --primary-color: #2563eb;
     }
 
-    /* --- NÚT BẤM THÔNG MINH (SMART HANDLE) --- */
+    /* --- NÚT BẤM THÔNG MINH (UPDATED FOR HIGH CONTRAST) --- */
     #launcher-btn {
         position: fixed;
-        top: 30vh; /* Vị trí dọc: 30% từ trên xuống */
-        left: 0;   /* Dính sát lề trái */
+        top: 30vh;
+        left: 0;
         z-index: 9999;
         
-        /* Trạng thái ban đầu: Bé tí */
-        width: 12px; 
+        /* Thay đổi quan trọng: Nền trắng đục + Bóng đổ đậm */
+        background: rgba(255, 255, 255, 0.95); /* Trắng gần như tuyệt đối để nổi trên nền đen */
+        border: 1px solid rgba(0,0,0,0.15);    /* Viền mỏng để nổi trên nền trắng */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* Bóng đổ mạnh giúp tách biệt khỏi nền */
+        
+        width: 16px; /* Mặc định to hơn chút để dễ thấy phần viền */
         height: 60px;
-        background: rgba(0,0,0,0.2); /* Màu mờ nhạt */
-        border-radius: 0 10px 10px 0; /* Bo tròn góc phải */
+        border-radius: 0 12px 12px 0;
         
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        backdrop-filter: blur(2px);
-        box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        backdrop-filter: blur(4px);
         overflow: hidden;
     }
 
-    /* Icon bên trong nút (ẩn đi khi nút bé) */
+    /* Icon bên trong nút */
     #launcher-btn .btn-icon { 
-        width: 24px; height: 24px; fill: #333; 
+        width: 24px; height: 24px; 
+        fill: #333; /* Icon màu đen đậm */
         opacity: 0; 
         transform: scale(0.5);
         transition: all 0.2s ease;
@@ -106,17 +109,16 @@
 
     /* KHI DI CHUỘT VÀO: Phóng to ra */
     #launcher-btn:hover {
-        width: 50px;       /* To ra */
-        height: 50px;      /* Vuông vắn hơn */
-        background: #fff;  /* Sáng lên */
+        width: 50px;
+        height: 50px;
+        background: #fff;
         opacity: 1;
-        border-radius: 0 12px 12px 0;
-        box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
-        border: 1px solid rgba(0,0,0,0.05);
+        border-color: rgba(0,0,0,0.1);
+        box-shadow: 4px 4px 20px rgba(0,0,0,0.2); /* Bóng đổ to hơn khi hover */
     }
     
     #launcher-btn:hover .btn-icon {
-        opacity: 1;        /* Hiện icon */
+        opacity: 1;
         transform: scale(1);
     }
 
@@ -124,7 +126,7 @@
     #launcher-overlay {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.5); /* Tối hơn xíu */
         backdrop-filter: blur(3px);
         z-index: 9998;
         opacity: 0; visibility: hidden;
@@ -151,20 +153,29 @@
 
     /* --- RESPONSIVE MEDIA QUERIES --- */
     @media (max-width: 600px) {
-        /* Trên điện thoại, drawer rộng hơn để dễ nhìn */
         #app-drawer { width: var(--drawer-width-mobile); max-width: 340px; }
         
-        /* Nút bấm trên mobile nên to hơn xíu để dễ chạm */
+        /* Mobile styling */
         #launcher-btn {
-            width: 14px; /* Dễ thấy hơn xíu */
-            height: 50px;
-            top: 50%; /* Giữa màn hình */
-            background: rgba(0,0,0,0.4); /* Đậm hơn để dễ nhìn */
+            width: 24px; /* Trên mobile làm to hẳn ra dạng "tay cầm" */
+            height: 44px;
+            top: 50%;
+            /* Vẫn giữ style trắng trên mobile */
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-        /* Chạm vào là mở luôn hiệu ứng hover */
+        
+        /* Icon trên mobile hiện mờ mờ để người dùng biết là nút */
+        #launcher-btn .btn-icon {
+            opacity: 0.5;
+            transform: scale(0.8);
+            width: 18px; height: 18px;
+        }
+
         #launcher-btn:active {
             width: 50px; background: #fff;
         }
+        #launcher-btn:active .btn-icon { opacity: 1; transform: scale(1); }
     }
 
     /* Header */
@@ -235,12 +246,9 @@
     /* Grid */
     .app-grid {
         display: grid;
-        /* Tự động điều chỉnh số cột nếu màn hình quá bé */
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
     }
-    
-    /* Fix grid trên màn hình siêu nhỏ (iPhone SE cũ) */
     @media (max-width: 320px) {
          .app-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -255,7 +263,7 @@
     
     /* Icon Box */
     .app-icon-box {
-        width: 44px; height: 44px; /* Tăng nhẹ để dễ bấm trên touch */
+        width: 44px; height: 44px;
         border-radius: 12px;
         display: flex; align-items: center; justify-content: center;
         font-size: 20px; color: white; margin-bottom: 6px;
@@ -387,7 +395,6 @@
     if (isOpen) {
       drawer.classList.add("active");
       overlay.classList.add("active");
-      // Delay focus 1 xíu để transition chạy mượt trên mobile
       setTimeout(() => searchInput.focus(), 100);
     } else {
       drawer.classList.remove("active");
