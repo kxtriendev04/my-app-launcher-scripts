@@ -8,7 +8,7 @@
     {
       name: "VitePhim",
       url: "https://vitephim-fe.vercel.app/",
-      logo: "https://cdn-icons-png.flaticon.com/512/3163/3163478.png",
+      logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/vitephimlogo.png",
       color: "#111827",
       category: "Giải trí & Media",
       isNew: true,
