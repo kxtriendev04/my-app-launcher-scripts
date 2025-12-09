@@ -22,7 +22,7 @@
     },
     {
       name: "Pikutei Editor",
-      url: "https://pikutei.com",
+      url: "https://pikusei-fe.vercel.app/",
       logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/pikuseilogo.png",
       color: "#ec4899",
       category: "Công cụ Sáng tạo",
@@ -97,8 +97,8 @@
         border: 1px solid rgba(0,0,0,0.15);   
         box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         
-        width: 16px; 
-        height: 60px;
+        width: 12px; 
+        height: 40px;
         border-radius: 0 12px 12px 0;
         
         display: flex;
