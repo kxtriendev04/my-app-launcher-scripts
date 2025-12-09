@@ -6,7 +6,7 @@
     // --- NHÓM 1: APP CỦA TÔI ---
     {
       name: "VitePhim",
-      url: "https://vitephim-fe.vercel.app/",
+      url: "https://vitephim.khucxuantrien.id.vn/",
       logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/vitephimlogo.png",
       color: "#111827",
       category: "Giải trí & Media",
@@ -14,7 +14,7 @@
     },
     {
       name: "MiniQuiz",
-      url: "https://vue-mini-quiz.vercel.app/",
+      url: "https://miniquiz.khucxuantrien.id.vn/",
       logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/miniquizlogo.png",
       color: "#8b5cf6",
       category: "Giáo dục & Game",
@@ -22,7 +22,7 @@
     },
     {
       name: "Pikutei Editor",
-      url: "https://pikusei-fe.vercel.app/",
+      url: "https://pikutei.khucxuantrien.id.vn/",
       logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/pikuseilogo.png",
       color: "#ec4899",
       category: "Công cụ Sáng tạo",
