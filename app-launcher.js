@@ -94,7 +94,7 @@
         z-index: 9999;
         
         background: rgba(255, 255, 255, 0.95);
-        border: 1px solid rgba(0,0,0,0.15);   
+        border: 1px solid rgba(0,0,0,0.15);    
         box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         
         width: 12px; 
@@ -105,12 +105,11 @@
         align-items: center;
         justify-content: center;
         
-        /* [MỚI] Cho phép kéo thả tốt hơn */
         cursor: grab; 
-        touch-action: none; /* Ngăn cuộn trang khi chạm vào nút trên mobile */
-        user-select: none;  /* Ngăn bôi đen icon */
+        touch-action: none; 
+        user-select: none;  
 
-        transition: width 0.3s, background 0.3s, border 0.3s, box-shadow 0.3s; /* Bỏ transition top/transform để kéo mượt */
+        transition: width 0.3s, background 0.3s, border 0.3s, box-shadow 0.3s; 
         backdrop-filter: blur(4px);
         overflow: hidden;
     }
@@ -119,17 +118,15 @@
         cursor: grabbing;
     }
 
-    /* Icon bên trong nút */
     #launcher-btn .btn-icon { 
         width: 24px; height: 24px; 
         fill: #333; 
         opacity: 0; 
         transform: scale(0.5);
         transition: all 0.2s ease;
-        pointer-events: none; /* Icon không chặn sự kiện chuột */
+        pointer-events: none; 
     }
 
-    /* KHI DI CHUỘT VÀO */
     #launcher-btn:hover {
         width: 50px;
         height: 50px;
@@ -180,7 +177,6 @@
         #launcher-btn {
             width: 20px; 
             height: 36px;
-            /* Xóa top: 50% ở đây vì sẽ set bằng JS */
             background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
@@ -197,11 +193,31 @@
         #launcher-btn:active .btn-icon { opacity: 1; transform: scale(1); }
     }
 
-    /* Header, Search, Content, Grid css giữ nguyên */
+    /* Header CSS (Đã cập nhật cho nút Home) */
     .drawer-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .drawer-title { font-weight: 700; font-size: 18px; color: #111; }
-    .close-btn { cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #6b7280; transition: 0.2s; background: #f9fafb; }
-    .close-btn:hover { background: #fee2e2; color: #ef4444; }
+    
+    /* Container cho các nút bên phải header */
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+
+    /* Style chung cho nút Home và Close */
+    .header-icon-btn { 
+        cursor: pointer; 
+        width: 32px; height: 32px; 
+        display: flex; align-items: center; justify-content: center; 
+        border-radius: 50%; 
+        color: #6b7280; 
+        transition: 0.2s; 
+        background: #f9fafb; 
+        text-decoration: none; /* Cho thẻ a */
+    }
+    
+    /* Hover nút Home (Màu xanh) */
+    .header-icon-btn:hover { background: #e5e7eb; color: #2563eb; }
+    
+    /* Hover nút Close (Màu đỏ - class riêng) */
+    .header-icon-btn.close-type:hover { background: #fee2e2; color: #ef4444; }
+
     .search-wrapper { padding: 0 20px 20px 20px; flex-shrink: 0; }
     .search-group { position: relative; width: 100%; display: flex; align-items: center; }
     .search-icon { position: absolute; left: 12px; width: 18px; height: 18px; fill: #9ca3af; pointer-events: none; }
@@ -235,8 +251,15 @@
     <div id="app-drawer">
         <div class="drawer-header">
             <span class="drawer-title">Apps Center</span>
-            <div class="close-btn" id="close-drawer" title="Đóng">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+            
+            <div class="header-actions">
+                <a href="https://khucxuantrien.id.vn/" class="header-icon-btn" title="Trang chủ">
+                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+                
+                <div class="header-icon-btn close-type" id="close-drawer" title="Đóng">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                </div>
             </div>
         </div>
 
