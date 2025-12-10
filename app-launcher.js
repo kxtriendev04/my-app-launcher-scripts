@@ -5,20 +5,20 @@
   const myApps = [
     // --- NHÓM 1: APP CỦA TÔI ---
     {
+      id: 'jitracking',
+      name: 'Jitracking App',
+      url: 'https://jitracking.khucxuantrien.id.vn/',
+      logo: 'https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/jitrackinglogo.svg',
+      color: "#1e1e1e", // Optional color for background if needed
+      category: "Công cụ Sáng tạo",
+      isNew: true,
+    },
+    {
       name: "VitePhim",
       url: "https://vitephim.khucxuantrien.id.vn/",
       logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/vitephimlogo.png",
       color: "#111827",
       category: "Giải trí & Media",
-      isNew: true,
-    },
-    {
-      name: "MiniQuiz",
-      url: "https://miniquiz.khucxuantrien.id.vn/",
-      logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/miniquizlogo.png",
-      color: "#8b5cf6",
-      category: "Giáo dục & Game",
-      isNew: true,
     },
     {
       name: "Pikutei Editor",
@@ -26,6 +26,22 @@
       logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/pikuseilogo.png",
       color: "#ec4899",
       category: "Công cụ Sáng tạo",
+    },
+    {
+      name: "MiniQuiz",
+      url: "https://miniquiz.khucxuantrien.id.vn/",
+      logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/miniquizlogo.png",
+      color: "#8b5cf6",
+      category: "Giáo dục & Game",
+    },
+     {
+      id: 'ji',
+      name: 'Jimuno',
+      url: 'https://jimuno.khucxuantrien.id.vn/',
+      logo: 'https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/jimunologo.svg',
+      color: "#1e1e1e",
+      category: "Công cụ Sáng tạo",
+      isNew: true,
     },
 
     // --- NHÓM 2: Ý TƯỞNG HỆ THỐNG ---
@@ -233,7 +249,25 @@
     @media (max-width: 320px) { .app-grid { grid-template-columns: repeat(2, 1fr); } }
     .app-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 10px 5px; border-radius: 10px; transition: 0.2s; cursor: pointer; position: relative; }
     .app-item:hover { background: #f3f4f6; }
-    .app-icon-box { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; padding: 10px; color: white; margin-bottom: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); overflow: hidden; background-color: #fff; }
+    
+    /* Style mặc định cho icon box */
+    .app-icon-box { 
+        width: 50px; height: 50px; 
+        border-radius: 12px; 
+        display: flex; align-items: center; justify-content: center; 
+        font-size: 20px; 
+        padding: 10px; /* Padding mặc định */
+        color: white; margin-bottom: 6px; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+        overflow: hidden; 
+        background-color: #fff; 
+    }
+    
+    /* Class mới để bỏ padding cho các icon SVG đặc biệt */
+    .app-icon-box.no-padding {
+        padding: 0 !important;
+    }
+
     .app-img { width: 100%; height: 100%; object-fit: cover; }
     .app-name { font-size: 12px; font-weight: 500; color: #374151; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
     .badge-new { position: absolute; top: 8px; right: 8px; background: #ef4444; width: 6px; height: 6px; border-radius: 50%; border: 1px solid white; }
@@ -393,6 +427,10 @@
       apps.forEach((app) => {
         let iconContent = "";
         let bgStyle = "";
+        
+        // Kiểm tra xem có phải là SVG logo cần bỏ padding không (dựa trên tên file .svg)
+        const isSvgLogo = app.logo && app.logo.endsWith('.svg');
+        const paddingClass = isSvgLogo ? "no-padding" : "";
 
         if (app.logo && app.logo.length > 0) {
           iconContent = `<img src="${app.logo}" class="app-img" alt="${
@@ -412,7 +450,7 @@
 
         gridDiv.innerHTML += `
             <a href="${app.url}" class="app-item">
-                <div class="app-icon-box" style="${bgStyle}">
+                <div class="app-icon-box ${paddingClass}" style="${bgStyle}">
                     ${iconContent}
                 </div>
                 ${badgeHtml}
