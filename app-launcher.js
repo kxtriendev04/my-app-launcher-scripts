@@ -252,23 +252,31 @@
     
     /* Style mặc định cho icon box */
     .app-icon-box { 
-        width: 50px; height: 50px; 
-        border-radius: 12px; 
-        display: flex; align-items: center; justify-content: center; 
-        font-size: 20px; 
-        padding: 10px; /* Padding mặc định */
-        color: white; margin-bottom: 6px; 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
-        overflow: hidden; 
-        background-color: #fff; 
-    }
+    width: 48px; /* Dùng số chẵn thường giúp engine trình duyệt render chuẩn hơn */
+    height: 48px; 
+    border-radius: 12px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden; 
+    background-color: #fff; 
+    /* Thêm các thuộc tính này */
+    border: 0.5px solid rgba(0,0,0,0.05); /* Đường viền mảnh giúp định hình icon */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
     
     /* Class mới để bỏ padding cho các icon SVG đặc biệt */
     .app-icon-box.no-padding {
         padding: 0 !important;
     }
 
-    .app-img { width: 100%; height: 100%; object-fit: cover; }
+    .app-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Đổi từ cover sang contain để không bị mất góc icon */
+    image-rendering: -webkit-optimize-contrast; /* Giúp ảnh sắc nét hơn trên Safari/iOS */
+    image-rendering: crisp-edges;
+}
     .app-name { font-size: 12px; font-weight: 500; color: #374151; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
     .badge-new { position: absolute; top: 8px; right: 8px; background: #ef4444; width: 6px; height: 6px; border-radius: 50%; border: 1px solid white; }
   `;
