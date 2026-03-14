@@ -14,6 +14,15 @@
       isNew: true,
     },
     {
+      id: 'kxtfolio',
+      name: ' Kxt Portfolio',
+      url: 'https://kxtfolio.khucxuantrien.id.vn/',
+      logo: 'https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/kxtfolio.png',
+      color: "#1e1e1e", // Optional color for background if needed
+      category: "Landing Pages",
+      isNew: true,
+    },
+    {
       name: "VitePhim",
       url: "https://vitephim.khucxuantrien.id.vn/",
       logo: "https://raw.githubusercontent.com/kxtriendev04/my-app-launcher-scripts/main/vitephimlogo.png",
